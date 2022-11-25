@@ -6,7 +6,7 @@ object Constants {
     const val PASS_DATE_FORMAT = "DD/MM/yyyy"
     const val SHOW_DATE_FORMAT = "DD/MM/yyyy"
 
-    //RoomDatabase
+    //RoomDatabase and Table managed here
 
     const val DATABASE_NAME="myalldetails_db"
     const val DATABASE_VERSION=2
