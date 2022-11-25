@@ -26,6 +26,8 @@ abstract class ChatDatabase : RoomDatabase() {
     companion object {
         @Volatile var instance: ChatDatabase? = null
 
+        /*Create database and instance create here*/
+
         //Return database values
         @Synchronized
         fun getInstance(ctx: Context): ChatDatabase {

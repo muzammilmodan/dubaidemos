@@ -43,11 +43,19 @@ class ChatUserActivity : AppCompatActivity() {
         setProgressbar()
 
 
+
         if (ConnectivityDetector.isConnectingToInternet(mContext)) {
+            /*
+           * If user online show api call and show chat history
+           * */
             mainViewModel.deleteAllNotes()
             callGetChatUserListApi()
-        } else
+        } else {
+            /*
+              * If user Offline so get local database history and show
+              * */
             callGetOfflineUserList()
+        }
     }
 
     fun setProgressbar() {
@@ -122,7 +130,9 @@ class ChatUserActivity : AppCompatActivity() {
 
     fun callGetOfflineUserList() {
         alChatUserList = ArrayList()
-
+/*
+        * Using live data through data observe
+        * */
         mainViewModel.getAllNotes().observe(this, Observer {
             var alData: List<ConversationListResponse> = it
             var newData: ArrayList<ConversationData> = alData[0].data!!

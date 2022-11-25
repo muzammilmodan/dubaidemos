@@ -164,6 +164,11 @@ class ChatAdapter(
 
     }
 
+
+
+    /*
+    * If required time so managed here
+    * */
     var isFirstTimeShowDate = false
     private fun setTimeTextVisibility(
         time: Long,
