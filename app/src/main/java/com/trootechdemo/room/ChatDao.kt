@@ -6,6 +6,11 @@ import com.trootechdemo.model.ChatConversation
 import com.trootechdemo.model.ConversationListResponse
 import com.trootechdemo.utils.Constants
 
+
+/*
+        * Dao connect with database and table through. ALl operation managed here like insert,update,delete,get
+        * */
+
 @Dao
 interface ChatDao {
 
@@ -14,7 +19,7 @@ interface ChatDao {
     fun insertPersonData(user: ConversationListResponse)
 
     @Query("Select * from ${Constants.TABLE_NAME_CHAT_DETAILS}")
-    fun getAllUsers() : LiveData<List<ConversationListResponse>>
+    fun getAllUsers(): LiveData<List<ConversationListResponse>>
 
     @Query("delete from ${Constants.TABLE_NAME_CHAT_DETAILS}")
     fun deleteAllUser()
@@ -24,15 +29,10 @@ interface ChatDao {
     fun insertMessageData(user: ChatConversation)
 
     @Query("Select * from ${Constants.TABLE_NAME_CHAT_MESSAGE_DTL}")
-    fun getAllMessage() : LiveData<List<ChatConversation>>
+    fun getAllMessage(): LiveData<List<ChatConversation>>
 
     @Query("delete from ${Constants.TABLE_NAME_CHAT_MESSAGE_DTL}")
     fun deleteAllMessage()
-
-
-
-
-
 
 
 }
