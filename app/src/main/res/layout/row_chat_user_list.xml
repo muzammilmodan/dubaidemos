@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
+        cardView:cardCornerRadius="8dp"
+        cardView:cardElevation="8dp"
+        android:layout_margin="8dp"
+        android:elevation="@dimen/_18sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -13,7 +18,6 @@
             android:id="@+id/cnstMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_light"
             android:padding="@dimen/_10sdp">
 
             <ImageView
@@ -47,5 +51,5 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

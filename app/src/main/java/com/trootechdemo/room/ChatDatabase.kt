@@ -5,15 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.trootechdemo.model.ChatConversation
 import com.trootechdemo.model.ConversationListResponse
 import com.trootechdemo.utils.Constants
+import com.trootechdemo.utils.ConversationChatDataConverter
 import com.trootechdemo.utils.ConversationDataConverter
 import com.trootechdemo.utils.ConvertersByte
 
-
-@Database(entities = [ConversationListResponse::class],
+/*
+* Insert here as per create table name. means above data class cre
+* */
+@Database(entities = [ConversationListResponse::class, ChatConversation::class],
     version = Constants.DATABASE_VERSION,exportSchema = false)
-@TypeConverters(ConvertersByte::class, ConversationDataConverter::class)
+@TypeConverters(ConvertersByte::class, ConversationDataConverter::class,
+    ConversationChatDataConverter::class)
 abstract class ChatDatabase : RoomDatabase() {
 
     abstract fun personDao(): ChatDao

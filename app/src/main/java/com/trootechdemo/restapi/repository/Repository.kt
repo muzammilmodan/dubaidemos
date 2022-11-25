@@ -49,11 +49,14 @@ class Repository @Inject constructor(
 
     private var personDao: ChatDao
     private var allPersons: LiveData<List<ConversationListResponse>>
+    private var allChat: LiveData<List<ChatConversation>>
+
     private val database = ChatDatabase.getInstance(application)
 
     init {
         personDao = database.personDao() //initialization of dao class
         allPersons = personDao.getAllUsers()
+        allChat=personDao.getAllMessage()
     }
 
 
@@ -67,22 +70,27 @@ class Repository @Inject constructor(
         return allPersons
     }
 
-    fun update(note: ConversationListResponse) {
-        subscribeOnBackground {
-            personDao.updatePersonData(note)
-        }
-    }
-
-    fun delete(note: ConversationListResponse) {
-        subscribeOnBackground {
-            personDao.deletePersonData(note)
-        }
-    }
 
     fun deleteAllNotes() {
         subscribeOnBackground {
             personDao.deleteAllUser()
         }
     }
+
+
+    fun insertMessageData(note: ChatConversation) {
+        subscribeOnBackground {
+            personDao.insertMessageData(note)
+        }
+    }
+    fun getAllMessage(): LiveData<List<ChatConversation>> {
+        return allChat
+    }
+    fun deleteAllMessage() {
+        subscribeOnBackground {
+            personDao.deleteAllMessage()
+        }
+    }
+
 }
 

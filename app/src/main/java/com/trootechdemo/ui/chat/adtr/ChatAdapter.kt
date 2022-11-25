@@ -67,6 +67,9 @@ class ChatAdapter(
             time = chatHistory.get(pos).created_at.toString()
             val timestamp = time!!.toLong() * 1000L
 
+/*
+* Check here To_Id same as login user id so show view in right side or show view left side
+* */
 
             if (chatHistory[pos].from != to_id) {
                 old_role_flag = 1

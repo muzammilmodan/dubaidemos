@@ -4,20 +4,21 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.trootechdemo.R
 import com.trootechdemo.databinding.ActivityChatMessageBinding
-import com.trootechdemo.listners.RecyclerViewClickListners
+import com.trootechdemo.model.ChatConversation
 import com.trootechdemo.model.ChatConversationData
 import com.trootechdemo.model.ConversationData
+import com.trootechdemo.model.ConversationListResponse
 import com.trootechdemo.restapi.api.ApiCallback
-import com.trootechdemo.ui.chat.adtr.CategoryAdapter
 import com.trootechdemo.ui.chat.adtr.ChatAdapter
-import com.trootechdemo.ui.chat.adtr.ChatMessagesAdapter
+import com.trootechdemo.utils.ConnectivityDetector
 import com.trootechdemo.utils.Progress
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +45,38 @@ class ChatMessageActivity : AppCompatActivity() {
 
         init()
         setProgressbar()
-        callGetChatMessageListApi()
+
+
+        if (ConnectivityDetector.isConnectingToInternet(mContext)) {
+            /*
+            * If user online show api call and show chat history
+            * */
+            mainViewModel.deleteAllMessage()
+            callGetChatMessageListApi()
+        } else {
+            /*
+           * If user Offline so get local database history and show
+           * */
+            callGetOfflineMessageList()
+        }
+
+    }
+
+    private fun callGetOfflineMessageList() {
+        alChatUserList = ArrayList()
+
+        /*
+        * Using live data through data observe
+        * */
+        mainViewModel.getAllMessage().observe(this, Observer {
+            var alData: List<ChatConversation> = it
+            var newData: ArrayList<ChatConversationData> = alData[0].data
+            alChatUserList = ArrayList()
+            alChatUserList.addAll(newData)
+            Log.e("Get  datta--=-=--> ", "${alData}")
+            bindData()
+        })
+
     }
 
     fun setProgressbar() {
@@ -62,36 +94,10 @@ class ChatMessageActivity : AppCompatActivity() {
             linearLayoutManager.isSmoothScrollbarEnabled = false
             linearLayoutManager.reverseLayout = false
             rvChat.layoutManager = linearLayoutManager
-            //
 
-
-//            rvChat.addOnScrollListener(object :
-//                RecyclerView.OnScrollListener() {
-//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                    if (dy > 0) { //check for scroll down
-//                        visibleItemCount = linearLayoutManager.childCount
-//                        totalItemCount = linearLayoutManager.itemCount
-//                        pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
-//
-//                        if (!isLoading) {
-//                            if (!isLastPage) {
-//                                if (pastVisiblesItems == 0) {
-//                                    currentPage++
-//                                    isLoading = true
-//                                    callGetAllMessageApi(currentPage, false)
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                }
-//
-//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                    super.onScrollStateChanged(recyclerView, newState)
-//                }
-//            })
-
-
+            /*
+            * Send new message call
+            * */
             imgSend.setOnClickListener {
                 if (edtSendCommentACM.text.toString().trim().isEmpty()) {
                     Toast.makeText(
@@ -125,26 +131,27 @@ class ChatMessageActivity : AppCompatActivity() {
                     progress.hide()
                     binding.edtSendCommentACM.setText("")
 
-                var chatdata=    ChatConversationData(
-                    1669116911,
-                    response.data?.data!!.from,
-                    "",
-                    response.data?.data!!.from_delete,
-                    username,
-                    response.data?.data!!.id,
-                    response.data?.data!!.media,
-                    response.data?.data!!.message_type,
-                    response.data?.data!!.seen,
-                    response.data?.data!!.sticker,
-                    response.data?.data!!.text,
-                    response.data?.data!!.to,
-                    "",
-                    response.data?.data!!.to_delete,
-                    "",
-                    response.data?.data!!.message_type
+                    var chatdata = ChatConversationData(
+                        response.data?.data!!.id,
+                        1669116911,
+                        response.data?.data!!.from,
+                        "",
+                        response.data?.data!!.from_delete,
+                        username,
+                        response.data?.data!!.media,
+                        response.data?.data!!.message_type,
+                        response.data?.data!!.seen,
+                        response.data?.data!!.sticker,
+                        response.data?.data!!.text,
+                        response.data?.data!!.to,
+                        "",
+                        response.data?.data!!.to_delete,
+                        "",
+                        response.data?.data!!.message_type
                     )
 
-                    alChatUserList.add(alChatUserList.size -1,chatdata)
+
+                    alChatUserList.add(alChatUserList.size - 1, chatdata)
                     chatAdapter.notifyDataSetChanged()
 
                 }
@@ -191,8 +198,14 @@ class ChatMessageActivity : AppCompatActivity() {
 
                     arrayList = ArrayList()
 
+                    /*
+                   * Api call  history show if user online
+                   * */
                     alChatUserList.addAll(response.data!!.data)
-
+                    /*
+                    * Add chat history in local database
+                    * */
+                    mainViewModel.insertMessageData(response.data)
                     bindData()
 
                 }
@@ -213,6 +226,9 @@ class ChatMessageActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    * Bind Adapter data
+    * */
 
     private fun bindData() {
         try {

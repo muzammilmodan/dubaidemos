@@ -65,16 +65,28 @@ class ChatViewModel @Inject constructor(
         repository.insert(note)
     }
 
-    fun delete(note: ConversationListResponse) {
-        repository.delete(note)
-    }
-
     fun deleteAllNotes() {
         repository.deleteAllNotes()
     }
 
     fun getAllNotes(): LiveData<List<ConversationListResponse>> {
         return allUsers
+    }
+
+    //Chat
+    //Room
+    private val alChats = repository.getAllMessage()
+
+    fun insertMessageData(note: ChatConversation) {
+        repository.insertMessageData(note)
+    }
+
+    fun deleteAllMessage() {
+        repository.deleteAllMessage()
+    }
+
+    fun getAllMessage(): LiveData<List<ChatConversation>> {
+        return alChats
     }
 
 }

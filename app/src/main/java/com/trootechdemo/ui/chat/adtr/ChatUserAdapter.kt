@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.trootechdemo.databinding.RowChatUserListBinding
 import com.trootechdemo.listners.RecyclerViewClickListners
 import com.trootechdemo.model.ConversationData
@@ -34,7 +35,7 @@ class CategoryAdapter(
         fun bind(item: ConversationData, mContext: Context) {
             binding.tvUserName.text = item.user!!.fullname
             binding.tvUserLastMsg.text = item.text
-            //binding.ivProfile.setImageResource(item.icon)
+            binding.ivProfile.load(item.user!!.avater)
 
         }
     }

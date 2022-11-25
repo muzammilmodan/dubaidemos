@@ -42,13 +42,12 @@ class ChatUserActivity : AppCompatActivity() {
         init()
         setProgressbar()
 
-//        mainViewModel.deleteAllNotes()
-        callGetOfflineUserList()
 
-//        if (ConnectivityDetector.isConnectingToInternet(mContext))
-//            callGetChatUserListApi()
-//        else
-//            callGetOfflineUserList()
+        if (ConnectivityDetector.isConnectingToInternet(mContext)) {
+            mainViewModel.deleteAllNotes()
+            callGetChatUserListApi()
+        } else
+            callGetOfflineUserList()
     }
 
     fun setProgressbar() {
