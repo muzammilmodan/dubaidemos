@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/drawable/chat_right_bg.xml" value="0.1755" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/activity_chat_message.xml" value="0.25" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/activity_chat_user.xml" value="0.1828125" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/chat_item_message.xml" value="0.1381340579710145" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/custom_loading_dialog.xml" value="0.196875" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/row_chat_msg_bubble.xml" value="0.12047101449275362" />
+        <entry key="..\:/DUBAI/DubaiPractical/DubaiPractical/app/src/main/res/layout/row_chat_user_list.xml" value="0.196875" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
