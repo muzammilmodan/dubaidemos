@@ -73,7 +73,7 @@ class ChatViewModel @Inject constructor(
         repository.deleteAllNotes()
     }
 
-    fun getAllNotes(): LiveData<ArrayList<ConversationListResponse>> {
+    fun getAllNotes(): LiveData<List<ConversationListResponse>> {
         return allUsers
     }
 

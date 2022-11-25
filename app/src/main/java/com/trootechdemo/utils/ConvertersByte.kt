@@ -65,15 +65,15 @@ object ConvertersByte {
 
 
 
-    @TypeConverter
-    fun toData(data: String?): List<ConversationData?>? {
-        val gson = Gson()
-        if (data == null) {
-            return Collections.emptyList()
-        }
-        val listType = object : TypeToken<List<ConversationData?>?>() {}.type
-        return gson.fromJson<List<ConversationData?>>(data, listType)
-    }
+//    @TypeConverter
+//    fun toData(data: String?): List<ConversationData?>? {
+//        val gson = Gson()
+//        if (data == null) {
+//            return Collections.emptyList()
+//        }
+//        val listType = object : TypeToken<List<ConversationData?>?>() {}.type
+//        return gson.fromJson<List<ConversationData?>>(data, listType)
+//    }
 
 
 }

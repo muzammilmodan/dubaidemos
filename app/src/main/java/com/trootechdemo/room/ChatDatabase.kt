@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.trootechdemo.model.ConversationListResponse
 import com.trootechdemo.utils.Constants
+import com.trootechdemo.utils.ConversationDataConverter
 import com.trootechdemo.utils.ConvertersByte
 
 
 @Database(entities = [ConversationListResponse::class],
     version = Constants.DATABASE_VERSION,exportSchema = false)
-@TypeConverters(ConvertersByte::class)
+@TypeConverters(ConvertersByte::class, ConversationDataConverter::class)
 abstract class ChatDatabase : RoomDatabase() {
 
     abstract fun personDao(): ChatDao

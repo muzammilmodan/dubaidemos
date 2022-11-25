@@ -2,13 +2,15 @@ package com.trootechdemo.model
 
 import androidx.room.*
 import com.trootechdemo.utils.Constants
+import com.trootechdemo.utils.ConversationDataConverter
 
 @Entity(tableName = Constants.TABLE_NAME_CHAT_DETAILS)
 data class ConversationListResponse(
+    @ColumnInfo(name = "mainid")
     @PrimaryKey(autoGenerate = false)
     val mainid: Int?=0,
     val code: Int?=null,
-    @Relation(parentColumn = "mainid", entityColumn = "mainid", entity = ConversationData::class)
+    @TypeConverters(ConversationDataConverter::class)
     val data: ArrayList<ConversationData>?=null,
     val message: String?=null,
     val requests_count: Int?=null
@@ -32,6 +34,7 @@ data class ConversationData(
     val time: String?=null,
     val to_id: Int?=null,
     @Embedded val user: User?=null,
+    @ColumnInfo(name = "convertid")
     @PrimaryKey(autoGenerate = false)
     val id: Int?=0,
 )
@@ -45,6 +48,7 @@ data class Errors(
 
 @Entity(tableName = Constants.TABLE_NAME_PERSONS)
 data class User(
+    @ColumnInfo(name = "userid")
     @PrimaryKey(autoGenerate = true)
     val userid: Int?=0,
     val avater: String?=null,
@@ -52,19 +56,20 @@ data class User(
     val fullname: String?=null,
     val last_name: String?=null,
     val lastseen: String?=null,
-    @Relation(parentColumn = "userid", entityColumn = "userid", entity = Mediafile::class)
-    val mediafiles: ArrayList<Mediafile>?=null,
+//    @Relation(parentColumn = "userid", entityColumn = "userid", entity = Mediafile::class)
+//    val mediafiles: ArrayList<Mediafile>?=null,
     val username: String?=null,
     val verified_final: Boolean=false
 )
 
-@Entity(tableName = Constants.TABLE_NAME_MEDIA)
-data class Mediafile(
-    @PrimaryKey(autoGenerate = true)
-    val Mediaid: Int?=0,
-    val avater: String?=null,
-    val full: String?=null,
-    val is_private: Int=0,
-    val private_avater: String?=null,
-    val private_full: String?=null
-)
+//@Entity(tableName = Constants.TABLE_NAME_MEDIA)
+//data class Mediafile(
+//    @ColumnInfo(name = "mediaid")
+//    @PrimaryKey(autoGenerate = true)
+//    val Mediaid: Int?=0,
+//    val avater: String?=null,
+//    val full: String?=null,
+//    val is_private: Int=0,
+//    val private_avater: String?=null,
+//    val private_full: String?=null
+//)

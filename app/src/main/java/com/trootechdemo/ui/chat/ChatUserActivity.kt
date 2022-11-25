@@ -3,6 +3,7 @@ package com.trootechdemo.ui.chat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.trootechdemo.R
 import com.trootechdemo.databinding.ActivityChatUserBinding
@@ -40,10 +41,14 @@ class ChatUserActivity : AppCompatActivity() {
 
         init()
         setProgressbar()
-        if (ConnectivityDetector.isConnectingToInternet(mContext))
-            callGetChatUserListApi()
-        else
-            callGetOfflineUserList()
+
+//        mainViewModel.deleteAllNotes()
+        callGetOfflineUserList()
+
+//        if (ConnectivityDetector.isConnectingToInternet(mContext))
+//            callGetChatUserListApi()
+//        else
+//            callGetOfflineUserList()
     }
 
     fun setProgressbar() {
@@ -76,8 +81,9 @@ class ChatUserActivity : AppCompatActivity() {
                     alChatUserList.addAll(response.data?.data!!)
                     setCategoryView()
 
-                    //Store in local database
+                    //Store in local databasek
                     mainViewModel.insert(response.data)
+
                 }
 
                 is ApiCallback.OnError -> {
@@ -103,7 +109,7 @@ class ChatUserActivity : AppCompatActivity() {
                 var intent = Intent(mContext, ChatMessageActivity::class.java)
                 intent.putExtra("from_id", alChatUserList[position].from_id)
                 intent.putExtra("to_id", alChatUserList[position].to_id)
-                intent.putExtra("username", alChatUserList[position].user.first_name)
+                intent.putExtra("username", alChatUserList[position].user!!.first_name)
                 startActivity(intent)
             }
         })
@@ -119,9 +125,13 @@ class ChatUserActivity : AppCompatActivity() {
         alChatUserList = ArrayList()
 
         mainViewModel.getAllNotes().observe(this, Observer {
-            var alData: ArrayList<ConversationListResponse> = it
-            alChatUserList.add(alData[0].data[0])
+            var alData: List<ConversationListResponse> = it
+            var newData: ArrayList<ConversationData> = alData[0].data!!
+            alChatUserList = ArrayList()
+            alChatUserList.addAll(newData)
+            Log.e("Get  datta--=-=--> ", "${alData}")
+            setCategoryView()
         })
-        setCategoryView()
+
     }
 }

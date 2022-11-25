@@ -12,7 +12,7 @@ interface ChatDao {
     fun insertPersonData(user: ConversationListResponse)
 
     @Query("Select * from ${Constants.TABLE_NAME_CHAT_DETAILS}")
-    fun getAllUsers() : LiveData<ArrayList<ConversationListResponse>>
+    fun getAllUsers() : LiveData<List<ConversationListResponse>>
 
 
     @Update

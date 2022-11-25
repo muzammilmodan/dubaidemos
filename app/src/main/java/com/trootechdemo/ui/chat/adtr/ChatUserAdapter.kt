@@ -32,7 +32,7 @@ class CategoryAdapter(
         }
 
         fun bind(item: ConversationData, mContext: Context) {
-            binding.tvUserName.text = item.user.fullname
+            binding.tvUserName.text = item.user!!.fullname
             binding.tvUserLastMsg.text = item.text
             //binding.ivProfile.setImageResource(item.icon)
 

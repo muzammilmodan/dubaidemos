@@ -48,7 +48,7 @@ class Repository @Inject constructor(
     }
 
     private var personDao: ChatDao
-    private var allPersons: LiveData<ArrayList<ConversationListResponse>>
+    private var allPersons: LiveData<List<ConversationListResponse>>
     private val database = ChatDatabase.getInstance(application)
 
     init {
@@ -63,7 +63,7 @@ class Repository @Inject constructor(
             personDao.insertPersonData(note)
         }
     }
-    fun getAllPerson(): LiveData<ArrayList<ConversationListResponse>> {
+    fun getAllPerson(): LiveData<List<ConversationListResponse>> {
         return allPersons
     }
 
